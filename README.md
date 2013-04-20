@@ -1,12 +1,12 @@
 Subscriber
 ==========
 
-A lightweight nodejs module for notifying new subscribers to your website.
+A lightweight nodejs server for notifying new subscribers to your website.
 
 Usage
 =====
 
-TO-DO
+Usage: node sendmail.js <username> <password> <to: address>
 
 Browser Action
 ==============
