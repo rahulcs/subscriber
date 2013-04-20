@@ -6,7 +6,7 @@ A lightweight nodejs server for notifying new subscribers to your website.
 Usage
 =====
 
-Usage: node sendmail.js <username> <password> <to: address>
+Usage: node sendmail.js "<username>" "<password>" "<to: address>"
 
 Browser Action
 ==============
