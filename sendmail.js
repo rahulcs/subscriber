@@ -14,7 +14,6 @@ if(argLength <= 3 || argLength > 5 || argLength === 4){
 }
 
 process.argv.forEach(function (val, index, array) {
-    console.log(index + ': ' + val);
     if(index === 2){
 	usrName = val;
     } else if(index === 3){
@@ -33,10 +32,10 @@ var server = email.server.connect({
 
 http.createServer(function(req, res) {
     var uri = url.parse(req.url).pathname;
-    console.log(uri);
     res.writeHead(200, {'Content-Type': 'text/json'});
     if(uri === "/subscribe"){
-	if(req.method === "POST"){
+	if(req.method === "POST" || req.method === "GET"){
+	    console.log('post');
 	    var body = '';
 	    req.on('data', function(chunk){
 		body += chunk;
@@ -44,11 +43,16 @@ http.createServer(function(req, res) {
 	    req.on('end', function(){
 		var postData = querystring.parse(body);
 		var  mailText = 'New User Email ID: ' + postData.email;
+		console.log(server, mailText, usrName, toAdd);
 		server.send({
 		    text: mailText,
 		    from: "<"+usrName+">",
 		    to: "<"+toAdd+">",
-		    subject: "New User Notification"
+		    subject: "New User Notification",
+		    attachment: [{
+			data: "<html>"+mailText+"</html>",
+			alternative: true
+		    }]
 		}, function(err, message){
 		    if(err === null){
 			res.end('_mailer(\'{"message": "Mail Sent successfully", "success": true}\')');
